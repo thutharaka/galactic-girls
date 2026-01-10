@@ -29,7 +29,7 @@ body {
 
 /* Title image */
 .title-image {
-    width: 450px;  /* bigger title */
+    width: 465px;  /* bigger title */
     height: auto;
 }
 
@@ -45,11 +45,11 @@ body {
 .nav-button {
     text-decoration: none;
     color: white;
-    background-color: #7B337D;
+    background-color: #210535;
     padding: 12px 24px;
     border-radius: 8px;
     font-family: 'Orbitron', sans-serif; /* change the font here */
-    font-size: 18px;
+    font-size: 24px;
     transition: background-color 0.3s;
     width: fit-content; /* shrink to content */
 }
@@ -67,7 +67,7 @@ body {
 }
 
 .mascot-image {
-    width: 300px;
+    width: 350px;
     height: auto;
 }
 
@@ -78,7 +78,7 @@ body {
     padding: 10px 20px;
     text-align: center;
     color: white;
-    background-color: black; /* add a solid background */
+    background-color: #210535; /* add a solid background */
     font-family: 'Orbitron', sans-serif; /* change the font here */
     font-size: 20px; /* optional: adjust size */
 }
