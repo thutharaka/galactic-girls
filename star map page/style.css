@@ -30,3 +30,29 @@ span {
     font-size: 70px;
     color: gold;
 }
+
+/* This styles the container holding the buttons */
+.nav {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+}
+.nav-button {
+    background: #400640;
+    color: #F5D5E0;
+    
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: 'Orbitron', sans-serif; /* Orbitron on buttons */
+    font-weight: 400;
+}
+
+.nav-button:hover {
+    background: #7B337D;
+    color: #ffffff;
+    border: 1px solid #C874B2; /* Border glows on hover */
+    cursor: pointer;
+}
