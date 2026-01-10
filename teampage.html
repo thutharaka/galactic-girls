@@ -16,7 +16,7 @@
         }
 
         .overlay {
-            background-color: rgba(0, 0, 40, 0.6);
+            background-color: rgba(155, 155, 231, 0.6);
             min-height: 100vh;
             padding: 40px;
         }
@@ -24,14 +24,17 @@
         /* Title with logo */
         .title-container {
             position: relative;
+            display: flex;
+            align-items: center;
             justify-content: center;
-        }
+            min-height: 100px;
+        }   
 
         .logo {
             position: absolute;
-        left: 45%;
-        transform: translateX(-100%);
-        height: 80px; 
+            left: 40%;
+            transform: translateX(-100%);
+            height: 180px; 
         }
 
         .page-title {
@@ -103,17 +106,13 @@
         }
 
         .illustration {
-            width: 320px;
-            height: 320px;
-            border-radius: 50%;
-            border: 3px solid #b9e6ff;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
-            color: #b9e6ff;
-            background-color: rgba(10, 20, 60, 0.4);
-            text-align: center;
+        }
+        .illustration img {
+            max-width: 320px;
+            height: auto;
         }
 
         footer {
@@ -129,11 +128,11 @@
 
     <!-- Title + Logo -->
     <div class="title-container">
-        <img src="image/IMG_4353.PNG" alt="Star Quest Logo" class="logo">
-        <h1 class="page-title">TEAM PAGE</h1>
+        <img src="image/image-removebg-preview.png" alt="Logo" class="logo">
+        <h1 class="page-title">About Us</h1>
     </div>
 
-    <h2 class="sub-title">About Us</h2>
+    <h2 class="sub-title">Team</h2>
 
     <!-- Navigation -->
     <div class="nav">
@@ -185,7 +184,7 @@
         </div>
 
         <div class="illustration">
-            astronaut<br>girl
+            <img src="image/image_from_ios-removebg-preview (1).png" alt="Astronaut Girl">
         </div>
 
     </div>
