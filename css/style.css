@@ -1,0 +1,85 @@
+/* Body styling */
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(
+        160deg,
+        #210535,
+        #430D4B,
+        #7B337D,
+        #C874B2
+    );
+    font-family: sans-serif;
+}
+
+/* Main container: two columns */
+.main-container {
+    display: flex;
+    padding: 20px;
+}
+
+/* Left column styling */
+.left-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* center vertically */
+    flex: 1; /* left side width */
+    gap: 20px; /* space between image and nav */
+}
+
+/* Title image */
+.title-image {
+    width: 450px;  /* bigger title */
+    height: auto;
+}
+
+/* Navigation buttons */
+.nav-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    margin-left: 70px; /* move buttons to the right */
+}
+
+.nav-button {
+    text-decoration: none;
+    color: white;
+    background-color: #7B337D;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-family: 'Orbitron', sans-serif; /* change the font here */
+    font-size: 18px;
+    transition: background-color 0.3s;
+    width: fit-content; /* shrink to content */
+}
+
+.nav-button:hover {
+    background-color: #C874B2;
+}
+
+/* Right column: mascot */
+.right-column {
+    flex: 1; /* takes up remaining space */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.mascot-image {
+    width: 300px;
+    height: auto;
+}
+
+/* Bottom mission section */
+.mission-section {
+    border-top: 2px solid #7B337D;
+    margin-top: 40px;
+    padding: 10px 20px;
+    text-align: center;
+    color: white;
+    background-color: black; /* add a solid background */
+    font-family: 'Orbitron', sans-serif; /* change the font here */
+    font-size: 20px; /* optional: adjust size */
+}
+
