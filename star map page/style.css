@@ -1,0 +1,32 @@
+body {
+    background: 
+        url('stardot.png'), 
+        radial-gradient(#7B337D, #430D4B, #210535, black);
+    background-size: cover;
+    background-attachment: fixed;
+    color: #F5D5E0;
+    text-align: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.star-map-logo {
+    max-width: 400px; 
+    margin: 20px auto;
+    display: block;
+}
+
+.shelf {
+    border-bottom: 2px solid #C874B2;
+    width: 80%;
+    margin: 50px auto;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end; 
+}
+
+span {
+    font-size: 70px;
+    color: gold;
+}
