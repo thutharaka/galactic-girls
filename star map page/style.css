@@ -52,7 +52,7 @@ span {
 
 .nav-button:hover {
     background: #7B337D;
-    color: #ffffff;
+    color: #f5f0f0;
     border: 1px solid #C874B2; /* Border glows on hover */
     cursor: pointer;
 }
