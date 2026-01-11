@@ -5,18 +5,109 @@
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
-
 body {
     margin: 0;
     font-family: 'Orbitron', sans-serif;
-@@ -35,29 +33,6 @@
+    color: #cbcfd3;
+    background:
+        url('stardot.png'),
+        radial-gradient(#7B337D, #430D4B, #240938, black);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* ===== Title + Logo ===== */
+.title-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;               /* spacing between logo & text */
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    height: 120px;
+    margin: 0;
     position: static;        /* IMPORTANT */
     transform: none;
 }
 
 .page-title {
     font-size: 48px;
-@@ -136,22 +111,10 @@
+    margin: 0;
+}
+
+
+.sub-title {
+    text-align: center;
+    font-size: 28px;
+    margin: 40px 0 50px;
+}
+
+/* ===== Navigation ===== */
+.nav {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.nav-button {
+    display: inline-block;
+    padding: 10px 22px;
+    margin: 0 8px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #f5d5e0;
+    background-color: #210535;
+    border: 2px solid #fcfcfc;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: #c874b2;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+/* ===== Main Layout ===== */
+.about-container {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 80px;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+}
+
+/* ===== Member Cards ===== */
+.member-card {
+    border: 2px solid #ffffff7b;
+    border-radius: 16px;
+    padding: 20px;
+    background-color: rgba(228, 228, 228, 0.6);
+    width: 260px;
+}
+
+.member-name {
+    background-color: rgba(213, 220, 227, 0.7);
+    color: #1d4358;
+    padding: 8px 14px;
+    border-radius: 10px;
+    display: inline-block;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.member-name span {
+    color: #ffffff;
     margin-left: 6px;
 }
 
@@ -27,14 +118,32 @@ body {
 
 /* ===== Mascot ===== */
 .illustration img {
-@@ -169,7 +132,6 @@
+    max-width: 320px;
+}
+
+/* ===== Footer ===== */
+footer {
+    text-align: center;
+    margin: 80px 0 60px;
+    color: #b9e6ff;
+}
+</style>
+</head>
 
 <body>
 
 <!-- Title -->
 <div class="title-container">
     <img src="gglogo.png" alt="Logo" class="logo">
-@@ -185,28 +147,10 @@ <h2 class="sub-title">Team Info</h2>
+    <h1 class="page-title">About Us</h1>
+</div>
+
+<h2 class="sub-title">Team Info</h2>
+
+<!-- Navigation -->
+<div class="nav">
+    <a href="index.html" class="nav-button">Home</a>
+    <a href="tasks.html" class="nav-button">To Do</a>
     <a href="starmap.html" class="nav-button">Star Map</a>
     <a href="teampage.html" class="nav-button">About</a>
 </div>
@@ -45,14 +154,38 @@ body {
     <div class="team-grid">
         <div class="member-card">
             <div class="member-name">Katerina Hatsios <span>★</span></div>
-@@ -224,48 +168,6 @@ <h2 class="sub-title">Team</h2>
+            <ul>
+                <li>This is my first hackathon</li>
+                <li>I love cooking</li>
+                <li>Fav colour: Orange</li>
+            </ul>
+        </div>
+
+        <div class="member-card">
+            <div class="member-name">Tharaka Thurairasa <span>★</span></div>
+            <ul>
+                <li>I have done ballet for 10 years</li>
                 <li>My name means star :)</li>
                 <li>Fav animal: cow</li>
             </ul>
         </div>
 
         <div class="member-card">
-@@ -287,15 +189,9 @@ <h2 class="sub-title">Team</h2>
+            <div class="member-name">Archanaa Vivek <span>★</span></div>
+            <ul>
+                <li>I love space</li>
+                <li>I love stars</li>
+                <li>I am a girl who hacks</li>
+            </ul>
+        </div>
+
+        <div class="member-card">
+            <div class="member-name">Linxi Fan <span>★</span></div>
+            <ul>
+                <li>First time at Western!</li>
+                <li>From one of Canada’s coldest places</li>
+                <li>Seeking co-op in Fall</li>
+            </ul>
         </div>
     </div>
 
@@ -61,3 +194,10 @@ body {
     </div>
 
 </div>
+
+<footer>
+    <p>Made with 💜 by Galactic Girls</p>
+</footer>
+
+</body>
+</html>
