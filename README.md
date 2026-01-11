@@ -1,6 +1,3 @@
-what your project does, why it is useful, and how they can use it 
-
-
 Star Quest is a space-themed productivity web app that turns completing tasks into a fun, visual experience. Each completed task makes a star shine in the galaxy ✨
 
 We wanted to make task-tracking more engaging and motivating. Inspired by space, stars, and exploration, we designed a to-do list where productivity directly affects a living star map.
