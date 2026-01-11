@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Team Page</title>
+<meta charset="UTF-8">
 
 
     <style>
@@ -19,14 +18,11 @@
         }
 
 
-        /* Title with logo */
-        .title-container {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100px;
-        }   
+.sub-title {
+    text-align: center;
+    font-size: 28px;
+    margin: 40px 0 50px;
+}
 
         .logo {
             position: absolute;
@@ -48,10 +44,14 @@
             margin-bottom: 60px;
         }
 
-        .nav {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+/* ===== Main Layout ===== */
+.about-container {
+    display: flex;
+    gap: 60px;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 80px;
+}
 
         .nav a {
             color: #ffffff;
@@ -93,11 +93,10 @@
             padding-left: 110px;
         }
 
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-        }
+.member-name span {
+    color: #ffffff;
+    margin-left: 6px;
+}
 
         .member-card {
             border: 2px solid #ffffff7b;
@@ -146,13 +145,12 @@
 </head>
 
 <body>
-<div class="overlay">
 
-    <!-- Title + Logo -->
-    <div class="title-container">
-        <img src="images/image-removebg-preview.png" alt="Logo" class="logo">
-        <h1 class="page-title">About Us</h1>
-    </div>
+<!-- Title -->
+<div class="title-container">
+    <img src="gglogo.png" alt="Logo" class="logo">
+    <h1 class="page-title">About Us</h1>
+</div>
 
     <h2 class="sub-title">Team Info</h2>
 
@@ -221,5 +219,10 @@
     </footer>
 
 </div>
+
+<footer>
+    <p>Made with 💜 by Galactic Girls</p>
+</footer>
+
 </body>
 </html>

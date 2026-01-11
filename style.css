@@ -1,7 +1,7 @@
 body {
     background: 
         url('stardot.png'), 
-        radial-gradient(#7B337D, #430D4B, #210535, black);
+        radial-gradient(#7B337D, #400640, black);
     background-size: cover;
     background-attachment: fixed;
     color: #F5D5E0;
@@ -29,4 +29,29 @@ body {
 span {
     font-size: 70px;
     color: gold;
+}
+
+/* This styles the container holding the buttons */
+.nav {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+}
+.nav-button {
+    background: #400640;
+    color: #F5D5E0;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: 'Orbitron', sans-serif; /* Orbitron on buttons */
+    font-weight: 400;
+}
+
+.nav-button:hover {
+    background: #7B337D;
+    color: #f5f0f0;
+    border: 1px solid #C874B2; /* Border glows on hover */
+    cursor: pointer;
 }

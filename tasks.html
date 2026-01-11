@@ -5,39 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Galactic Tasks</title>
 
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&family=Inter:wght@400;500&display=swap');
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Orbitron:wght@500&display=swap" rel="stylesheet">
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+<style>
+/* ===== VISUALS (UNCHANGED FROM YOUR PROVIDED FILE) ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     min-height: 100vh;
     background:
-        radial-gradient(circle at top, #1b1f3b, #05060f 70%),
+        radial-gradient(circle at top, #430D4B, #210535 70%),
         url("https://www.transparenttextures.com/patterns/stardust.png");
-    color: #e5e7eb;
+    color: #F5D5E0;
     font-family: 'Inter', sans-serif;
     padding: 2rem 1rem;
 }
 
-.container {
-    max-width: 42rem;
-    margin: auto;
-}
+.container { max-width: 52rem; margin: auto; }
 
 .card {
-    background: rgba(134, 142, 187, 0.7);
+    background: #7B337D;
     backdrop-filter: blur(14px);
     border-radius: 1rem;
     padding: 2.5rem;
-    box-shadow:
-        0 0 40px rgba(99,102,241,0.15),
-        inset 0 0 20px rgba(255,255,255,0.03);
-    border: 1px solid rgba(99,102,241,0.3);
+    box-shadow: 0 0 40px #c874b2, inset 0 0 20px #f5d5e0;
+    border: 1px solid #210535;
 }
 
 h1 {
@@ -45,7 +40,7 @@ h1 {
     text-align: center;
     font-size: 2.2rem;
     margin-bottom: 1.75rem;
-    background: linear-gradient(90deg, #a5b4fc, #38bdf8);
+    background: linear-gradient(90deg, #430d4b, #210535);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 0.15em;
@@ -61,40 +56,24 @@ h1 {
     flex: 1;
     padding: 0.85rem 1.1rem;
     border-radius: 0.75rem;
-    border: 1px solid rgba(99,102,241,0.4);
-    background: rgba(5, 8, 25, 0.8);
+    border: 1px solid #210535;
+    background: #210535;
     color: #e5e7eb;
     outline: none;
     font-size: 1rem;
 }
 
-#todoInput::placeholder {
-    color: #9ca3af;
-}
-
-#todoInput:focus {
-    border-color: #38bdf8;
-    box-shadow: 0 0 15px rgba(56,189,248,0.5);
-}
+#todoInput:focus { box-shadow: 0 0 15px #f5d5e0; }
 
 .add-btn {
-    background: linear-gradient(135deg, #9394c8, #38bdf8);
+    background: linear-gradient(135deg, #210535, #7b337d);
     border: none;
     border-radius: 0.75rem;
     color: white;
     padding: 0.85rem 1.5rem;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
     font-family: 'Orbitron', sans-serif;
     letter-spacing: 0.05em;
-    transition: transform 0.15s, box-shadow 0.15s;
-}
-
-.add-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 20px rgba(56,189,248,0.6);
 }
 
 .stats {
@@ -102,13 +81,13 @@ h1 {
     justify-content: space-between;
     margin-bottom: 1rem;
     font-size: 0.85rem;
-    color: #a5b4fc;
+    color: #210535;
 }
 
 .empty-state {
     text-align: center;
     padding: 3rem 0;
-    color: #9ca3af;
+    color: #210535;
     opacity: 0.8;
 }
 
@@ -123,27 +102,9 @@ h1 {
     align-items: center;
     gap: 0.75rem;
     padding: 0.85rem;
-    background: rgba(10,15,45,0.7);
+    background: #210535;
     border-radius: 0.75rem;
-    border: 1px solid rgba(99,102,241,0.25);
-    transition: all 0.2s;
-}
-
-.todo-item:hover {
-    box-shadow: 0 0 18px rgba(99,102,241,0.35);
-}
-
-.todo-checkbox {
-    width: 1.2rem;
-    height: 1.2rem;
-    accent-color: #38bdf8;
-    cursor: pointer;
-}
-
-.todo-text {
-    flex: 1;
-    cursor: pointer;
-    color: #e5e7eb;
+    border: 1px solid #430d4b;
 }
 
 .todo-text.completed {
@@ -157,58 +118,71 @@ h1 {
     color: #fb7185;
     cursor: pointer;
     opacity: 0;
-    transition: opacity 0.2s, transform 0.2s;
 }
 
-.todo-item:hover .delete-btn {
-    opacity: 1;
+.todo-item:hover .delete-btn { opacity: 1; }
+
+.nav-buttons {
+    position: fixed;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
-.delete-btn:hover {
-    transform: scale(1.15);
-    color: #f43f5e;
+.nav-button {
+    font-family: 'Orbitron', sans-serif;
+    text-decoration: none;
+    color: #f5d5e0;
+    padding: 1rem 1.5rem;
+    width: 160px;
+    text-align: center;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #430d4b, #210535);
 }
 
-@media (max-width: 640px) {
-    .card {
-        padding: 1.75rem;
-    }
-    .add-btn span {
-        display: none;
-    }
+.nav-button.active {
+    background: linear-gradient(135deg, #7b337d, #430d4b);
 }
 </style>
 </head>
 
 <body>
+
+<nav class="nav-buttons">
+    <a href="index.html" class="nav-button">Home</a>
+    <a href="tasks.html" class="nav-button active">To-Do</a>
+    <a href="starmap.html" class="nav-button">Star Map</a>
+    <a href="teampage.html" class="nav-button">About Us</a>
+</nav>
+
 <div class="container">
-<div class="card">
+    <div class="card">
+        <h1>STAR QUEST</h1>
 
-<h1>GALACTIC TASKS</h1>
+        <form class="input-form" id="todoForm">
+            <input type="text" id="todoInput" placeholder="Enter mission objective..." autocomplete="off">
+            <button class="add-btn">LAUNCH</button>
+        </form>
 
-<form class="input-form" id="todoForm">
-    <input type="text" id="todoInput" placeholder="Enter mission objective..." autocomplete="off">
-    <button type="submit" class="add-btn">
-        <span>LAUNCH</span>
-    </button>
-</form>
+        <div class="stats">
+            <span id="activeCount"></span>
+            <span id="completedCount"></span>
+        </div>
 
-<div class="stats">
-    <span id="activeCount"></span>
-    <span id="completedCount"></span>
+        <div id="emptyState" class="empty-state">No missions assigned 🚀</div>
+        <div id="todoList" class="todo-list"></div>
+    </div>
 </div>
 
-<div id="emptyState" class="empty-state">
-    No missions assigned 🚀
-</div>
-
-<div id="todoList" class="todo-list"></div>
-
-</div>
-</div>
+<!-- ⭐ SHARED PROGRESS -->
+<script src="progress.js"></script>
 
 <script>
-let todos = [];
+let todos = JSON.parse(sessionStorage.getItem('galacticTodos')) || [];
+
 
 const todoForm = document.getElementById('todoForm');
 const todoInput = document.getElementById('todoInput');
@@ -222,20 +196,22 @@ todoForm.addEventListener('submit', e => {
     const text = todoInput.value.trim();
     if (!text) return;
 
-    todos.unshift({
-        id: Date.now().toString(),
-        text,
-        completed: false
-    });
-
+    todos.unshift({ id: Date.now(), text, completed: false });
     todoInput.value = '';
     render();
 });
 
 function toggleTodo(id) {
-    todos = todos.map(t =>
-        t.id === id ? { ...t, completed: !t.completed } : t
-    );
+    todos = todos.map(t => {
+        if (t.id === id && !t.completed) {
+            awardStar(); // ⭐ keeps your point/star system
+            return { ...t, completed: true };
+        }
+        if (t.id === id && t.completed) {
+            return { ...t, completed: false };
+        }
+        return t;
+    });
     render();
 }
 
@@ -252,28 +228,17 @@ function render() {
     completedCount.textContent = completed.length ? `${completed.length} completed` : '';
 
     emptyState.style.display = todos.length ? 'none' : 'block';
-    todoList.style.display = todos.length ? 'flex' : 'none';
 
     todoList.innerHTML = todos.map(todo => `
         <div class="todo-item">
-            <input type="checkbox" class="todo-checkbox"
-                ${todo.completed ? 'checked' : ''}
-                onchange="toggleTodo('${todo.id}')">
-            <span class="todo-text ${todo.completed ? 'completed' : ''}"
-                onclick="toggleTodo('${todo.id}')">
-                ${escapeHtml(todo.text)}
+            <input type="checkbox" ${todo.completed ? 'checked' : ''} onchange="toggleTodo(${todo.id})">
+            <span class="todo-text ${todo.completed ? 'completed' : ''}" onclick="toggleTodo(${todo.id})">
+                ${todo.text}
             </span>
-            <button class="delete-btn" onclick="deleteTodo('${todo.id}')">
-                ✖
-            </button>
+            <button class="delete-btn" onclick="deleteTodo(${todo.id})">✖</button>
         </div>
     `).join('');
-}
-
-function escapeHtml(text) {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
+    sessionStorage.setItem('galacticTodos', JSON.stringify(todos));
 }
 
 render();
