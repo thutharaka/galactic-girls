@@ -71,3 +71,77 @@ span {
         0 0 10px 4px rgba(245,213,224,0.9),
         0 0 25px 8px rgba(200,116,178,0.8);
 }
+body {
+    background:
+        url('stardot.png'),
+        radial-gradient(#7B337D, #430D4B, #210535, black);
+    background-size: cover;
+    background-attachment: fixed;
+    color: #F5D5E0;
+    text-align: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.star-map-logo {
+    max-width: 400px;
+    margin: 20px auto;
+    display: block;
+}
+
+.shelf {
+    border-bottom: 2px solid #C874B2;
+    width: 80%;
+    margin: 50px auto;
+    padding: 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+
+/* Star boxes with glow */
+.star-box {
+    font-size: 70px;
+    color: gold;
+    text-shadow:
+        0 0 10px gold,
+        0 0 20px gold,
+        0 0 30px #fdd835,
+        0 0 40px #fdd835,
+        0 0 50px #fdd835;
+    transition: all 0.3s ease;
+}
+
+.star-box:hover {
+    transform: scale(1.2);
+    text-shadow:
+        0 0 15px gold,
+        0 0 30px gold,
+        0 0 45px #fdd835,
+        0 0 60px #fdd835,
+        0 0 75px #fdd835;
+}
+
+/* Navigation buttons */
+.nav {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+}
+.nav-button {
+    background: #400640;
+    color: #F5D5E0;
+    padding: 8px 15px;
+    text-decoration: none;
+    border-radius: 4px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 400;
+}
+.nav-button:hover {
+    background: #7B337D;
+    color: #f5f0f0;
+    border: 1px solid #C874B2;
+    cursor: pointer;
+}

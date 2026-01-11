@@ -318,3 +318,21 @@ h1 {
     border-radius: 50%;
     background: #f5d5e0;
 }
+
+/* Small stars for category tasks */
+.star {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #f5d5e0;
+    margin-left: 0.5rem;
+    transition: all 0.3s ease;
+    opacity: 0.4;
+}
+
+.star.glow {
+    box-shadow: 0 0 10px #f5d5e0, 0 0 20px #c874b2;
+    opacity: 1;
+    transform: scale(1.5);
+}
