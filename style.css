@@ -55,3 +55,19 @@ span {
     border: 1px solid #C874B2; /* Border glows on hover */
     cursor: pointer;
 }
+
+.star {
+    position: absolute;
+    border-radius: 50%;
+    background: #f5d5e0;
+}
+
+.star.glow {
+    transition: box-shadow 0.3s ease;
+}
+
+.star.static-glow {
+    box-shadow:
+        0 0 10px 4px rgba(245,213,224,0.9),
+        0 0 25px 8px rgba(200,116,178,0.8);
+}

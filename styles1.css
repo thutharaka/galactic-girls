@@ -251,6 +251,7 @@ h1 {
     margin-bottom: 2rem;
 }
 
+
 /* Animations */
 @keyframes fadeIn {
     from {
@@ -312,12 +313,8 @@ h1 {
         width: 100%;
         justify-content: center;
     }
-    
-    body {
-        padding: 1rem 0.5rem;
-    }
-    
-    h1 {
-        font-size: 1.8rem;
-    }
+    .star {
+    position: absolute;
+    border-radius: 50%;
+    background: #f5d5e0;
 }
