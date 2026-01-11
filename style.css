@@ -1,7 +1,7 @@
 body {
     background: 
         url('stardot.png'), 
-        radial-gradient(#7B337D, #430D4B, #210535, black);
+        radial-gradient(#7B337D, #400640, black);
     background-size: cover;
     background-attachment: fixed;
     color: #F5D5E0;
