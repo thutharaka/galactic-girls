@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Orbitron:wght@500&display=swap" rel="stylesheet">
 
 <style>
-/* ===== VISUALS (UNCHANGED FROM YOUR PROVIDED FILE) ===== */
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
@@ -31,7 +31,7 @@ body {
     backdrop-filter: blur(14px);
     border-radius: 1rem;
     padding: 2.5rem;
-    box-shadow: 0 0 40px #c874b2, inset 0 0 20px #f5d5e0;
+    box-shadow: 0 0 10px #c874b2, inset 0 0 20px #f5d5e0;
     border: 1px solid #210535;
 }
 
@@ -177,7 +177,6 @@ h1 {
     </div>
 </div>
 
-<!-- ⭐ SHARED PROGRESS -->
 <script src="progress.js"></script>
 
 <script>
@@ -204,7 +203,7 @@ todoForm.addEventListener('submit', e => {
 function toggleTodo(id) {
     todos = todos.map(t => {
         if (t.id === id && !t.completed) {
-            awardStar(); // ⭐ keeps your point/star system
+            awardStar(); 
             return { ...t, completed: true };
         }
         if (t.id === id && t.completed) {
@@ -243,6 +242,5 @@ function render() {
 
 render();
 </script>
-
 </body>
 </html>
