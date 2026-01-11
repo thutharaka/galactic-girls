@@ -10,6 +10,29 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Orbitron:wght@500&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="styles1.css">
+<style>
+/* Floating star default style */
+.star {
+    position: absolute;
+    border-radius: 50%;
+    background: #f5d5e0;
+    opacity: 0.5;
+    transition: all 0.5s ease;
+}
+
+/* Glow for category task stars */
+.star.glow {
+    box-shadow: 0 0 8px #f5d5e0, 0 0 16px #c874b2, 0 0 24px #f5d5e0;
+    transform: scale(1.5);
+    opacity: 1 !important;
+}
+
+/* Continuous twinkle for floating stars */
+@keyframes twinkle {
+    0%, 100% { opacity: 0.3; transform: scale(0.8);}
+    50% { opacity: 1; transform: scale(1);}
+}
+</style>
 </head>
 <body>
 
@@ -83,8 +106,11 @@
 
 </div>
 
+<!-- Floating stars in background -->
+<div id="starContainer"></div>
+
 <script>
-// ===== MAIN USER TASKS (SESSION STORAGE + STAR MAP SYNC) =====
+// ===== MAIN USER TASKS =====
 let todos = JSON.parse(sessionStorage.getItem('userTodos')) || [];
 
 const todoForm = document.getElementById('todoForm');
@@ -99,20 +125,13 @@ todoForm.addEventListener('submit', e => {
     const text = todoInput.value.trim();
     if (!text) return;
 
-    todos.unshift({
-        id: Date.now().toString(),
-        text,
-        completed: false
-    });
-
+    todos.unshift({id: Date.now().toString(), text, completed: false});
     todoInput.value = '';
     saveAndRender();
 });
 
 function toggleTodo(id) {
-    todos = todos.map(t =>
-        t.id === id ? { ...t, completed: !t.completed } : t
-    );
+    todos = todos.map(t => t.id === id ? {...t, completed: !t.completed} : t);
     saveAndRender();
 }
 
@@ -123,11 +142,8 @@ function deleteTodo(id) {
 
 function saveAndRender() {
     sessionStorage.setItem('userTodos', JSON.stringify(todos));
-
-    // Sync completed tasks to localStorage for star map
     const completedTaskIds = todos.filter(t => t.completed).map(t => t.id);
     localStorage.setItem('completedTaskIds', JSON.stringify(completedTaskIds));
-
     render();
 }
 
@@ -140,21 +156,15 @@ function render() {
                 onclick="toggleTodo('${todo.id}')">
                 ${escapeHtml(todo.text)}
             </span>
-            <button class="delete-btn"
-                onclick="deleteTodo('${todo.id}')">✖</button>
+            <button class="delete-btn" onclick="deleteTodo('${todo.id}')">✖</button>
         </div>
     `).join('');
 
-    updateStats();
-    emptyState.style.display = todos.length ? 'none' : 'block';
-}
-
-function updateStats() {
     const active = todos.filter(t => !t.completed).length;
     const completed = todos.filter(t => t.completed).length;
-
     activeCount.textContent = `${active} active mission${active !== 1 ? 's' : ''}`;
     completedCount.textContent = completed ? `${completed} completed` : '';
+    emptyState.style.display = todos.length ? 'none' : 'block';
 }
 
 function escapeHtml(text) {
@@ -163,21 +173,79 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// ===== CATEGORY STARS =====
-document.querySelectorAll('.category-checkbox').forEach(cb => {
+// ===== CATEGORY TASKS & STARS =====
+let categoryState = JSON.parse(sessionStorage.getItem('categoryState')) || {};
+const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
+
+// Floating stars
+const starContainer = document.getElementById('starContainer');
+const NUM_STARS = 50;
+const floatingStars = [];
+
+for (let i = 0; i < NUM_STARS; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+    star.style.width = star.style.height = Math.random() * 3 + 1 + 'px';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite`;
+    starContainer.appendChild(star);
+    floatingStars.push(star);
+}
+
+// Update glow intensity and size based on completed category tasks
+function updateFloatingStarGlow() {
+    const completedCount = Object.values(categoryState).filter(Boolean).length;
+
+    floatingStars.forEach(star => {
+        // Base size
+        let size = 2 + Math.random() * 2;
+
+        // Increase size with completed tasks
+        size += completedCount * 6; // bigger growth
+
+        star.style.width = star.style.height = size + 'px';
+
+        // Glow intensity grows sharply
+        const intensity = 15 + completedCount * 25; 
+        star.style.boxShadow = `
+            0 0 ${intensity}px gold,
+            0 0 ${intensity * 2}px gold,
+            0 0 ${intensity * 3}px #fdd835
+        `;
+    });
+}
+
+// Initialize category checkboxes
+categoryCheckboxes.forEach(cb => {
+    const starId = cb.dataset.star;
+    const starEl = document.getElementById(starId);
+
+    if (categoryState[starId]) {
+        cb.checked = true;
+        starEl.classList.add('glow');
+    }
+
     cb.addEventListener('change', e => {
-        const starId = e.target.dataset.star;
-        const starEl = document.getElementById(starId);
-        if (e.target.checked) starEl.classList.add('glow');
-        else starEl.classList.remove('glow');
+        if (cb.checked) {
+            starEl.classList.add('glow');
+            categoryState[starId] = true;
+        } else {
+            starEl.classList.remove('glow');
+            categoryState[starId] = false;
+        }
+        sessionStorage.setItem('categoryState', JSON.stringify(categoryState));
+        updateFloatingStarGlow();
     });
 });
+
+// Update floating stars at start
+updateFloatingStarGlow();
 
 window.toggleTodo = toggleTodo;
 window.deleteTodo = deleteTodo;
 
 render();
 </script>
-
 </body>
 </html>
