@@ -27,7 +27,7 @@ How the webpage works
 1. User adds a task in the To-Do List page
 2. When a task is completed:
    - The task is crossed out and a star lights up on the Star Map
-3. More completed tasks = a brighter galaxy ✨
+3. More completed tasks = a brighter galaxy
 
-✨ *Turn productivity into a journey through the stars.*
+✨ *Turn productivity into a journey through the stars.* ✨
 
