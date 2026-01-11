@@ -83,3 +83,40 @@ body {
     font-size: 20px; /* optional: adjust size */
 }
 
+/* Twinkly stars background */
+.stars {
+    position: fixed;
+    top: 10;
+    left: 10;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* behind everything */
+    background: transparent;
+}
+
+/* Create 200 tiny stars with box-shadow */
+.stars::after {
+    content: '';
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    border-radius: 50%;
+    box-shadow:
+        20px 30px white, 50px 80px white, 80px 150px white, 120px 200px white,
+        150px 50px white, 180px 300px white, 200px 400px white, 250px 100px white,
+        300px 50px white, 350px 250px white, 400px 300px white, 450px 150px white,
+        500px 400px white, 550px 200px white, 600px 100px white, 650px 350px white,
+        700px 50px white, 750px 300px white, 800px 150px white, 850px 400px white,
+        900px 200px white, 950px 100px white, 1000px 250px white;
+    animation: twinkle 2s infinite alternate;
+}
+
+
+/* Twinkle animation */
+@keyframes twinkle {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+}
+
+
