@@ -10,33 +10,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Orbitron:wght@500&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="styles1.css">
-<style>
-/* Floating star default style */
-.star {
-    position: absolute;
-    border-radius: 50%;
-    background: #f5d5e0;
-    opacity: 0.5;
-    transition: all 0.5s ease;
-}
-
-/* Glow for category task stars */
-.star.glow {
-    box-shadow: 0 0 8px #f5d5e0, 0 0 16px #c874b2, 0 0 24px #f5d5e0;
-    transform: scale(1.5);
-    opacity: 1 !important;
-}
-
-/* Continuous twinkle for floating stars */
-@keyframes twinkle {
-    0%, 100% { opacity: 0.3; transform: scale(0.8);}
-    50% { opacity: 1; transform: scale(1);}
-}
-</style>
 </head>
 <body>
 
-<!-- Navigation -->
 <nav class="nav-buttons">
     <a href="index.html" class="nav-button">Home</a>
     <a href="tasks.html" class="nav-button active">To-Do</a>
@@ -46,63 +22,67 @@
 
 <div class="container">
 
-    <!-- Main User Tasks -->
-    <div class="card">
-        <h1>STAR QUEST</h1>
-        <form class="input-form" id="todoForm">
-            <input type="text" id="todoInput" placeholder="Enter mission objective..." autocomplete="off">
-            <button class="add-btn">LAUNCH</button>
-        </form>
+<!-- MAIN TASKS -->
+<div class="card">
+    <h1>STAR QUEST</h1>
+    <form class="input-form" id="todoForm">
+        <input type="text" id="todoInput" placeholder="Enter mission objective..." autocomplete="off">
+        <button class="add-btn">LAUNCH</button>
+    </form>
 
-        <div class="stats">
-            <span id="activeCount"></span>
-            <span id="completedCount"></span>
-        </div>
-
-        <div id="emptyState" class="empty-state">No missions assigned 🚀</div>
-        <div id="todoList" class="todo-list"></div>
+    <div class="stats">
+        <span id="activeCount"></span>
+        <span id="completedCount"></span>
     </div>
 
-    <!-- Category Tasks -->
-    <div class="category-card">
-        <div class="category-title">Colonizing Space</div>
-        <div class="category-list">
-            <div class="todo-item">
-                <input type="checkbox" class="category-checkbox" data-star="star-cat-1">
-                Research & Development
-                <span class="star" id="star-cat-1"></span>
-            </div>
-            <div class="todo-item">
-                <input type="checkbox" class="category-checkbox" data-star="star-cat-2">
-                Mission Planning & Logistics
-                <span class="star" id="star-cat-2"></span>
-            </div>
-            <div class="todo-item">
-                <input type="checkbox" class="category-checkbox" data-star="star-cat-3">
-                Transportation Systems Development
-                <span class="star" id="star-cat-3"></span>
-            </div>
-        </div>
+    <div id="emptyState" class="empty-state">No missions assigned 🚀</div>
+    <div id="todoList" class="todo-list"></div>
+</div>
 
-        <div class="category-title">Immersive Worlds</div>
-        <div class="category-list">
-            <div class="todo-item">
-                <input type="checkbox" class="category-checkbox" data-star="star-cat-4">
-                3D Modeling and Asset Creation
-                <span class="star" id="star-cat-4"></span>
-            </div>
-            <div class="todo-item">
-                <input type="checkbox" class="category-checkbox" data-star="star-cat-5">
-                Audio and Sound Design
-                <span class="star" id="star-cat-5"></span>
-            </div>
-            <div class="todo-item">
-                <input type="checkbox" class="category-checkbox" data-star="star-cat-6">
-                Programming Logic and Interactivity
-                <span class="star" id="star-cat-6"></span>
-            </div>
+<!-- CATEGORY TASKS -->
+<div class="category-card">
+
+    <!-- Colonizing Space -->
+    <div class="category-title">Colonizing Space</div>
+    <div class="category-list">
+        <div class="todo-item">
+            <input type="checkbox" class="category-checkbox" data-star="star-cat-1">
+            Research & Development
+            <span class="star" id="star-cat-1"></span>
+        </div>
+        <div class="todo-item">
+            <input type="checkbox" class="category-checkbox" data-star="star-cat-2">
+            Mission Planning & Logistics
+            <span class="star" id="star-cat-2"></span>
+        </div>
+        <div class="todo-item">
+            <input type="checkbox" class="category-checkbox" data-star="star-cat-3">
+            Transportation Systems Development
+            <span class="star" id="star-cat-3"></span>
         </div>
     </div>
+
+    <!-- Immersive Worlds -->
+    <div class="category-title">Immersive Worlds</div>
+    <div class="category-list">
+        <div class="todo-item">
+            <input type="checkbox" class="category-checkbox" data-star="star-cat-4">
+            3D Modeling and Asset Creation
+            <span class="star" id="star-cat-4"></span>
+        </div>
+        <div class="todo-item">
+            <input type="checkbox" class="category-checkbox" data-star="star-cat-5">
+            Audio and Sound Design
+            <span class="star" id="star-cat-5"></span>
+        </div>
+        <div class="todo-item">
+            <input type="checkbox" class="category-checkbox" data-star="star-cat-6">
+            Programming Logic and Interactivity
+            <span class="star" id="star-cat-6"></span>
+        </div>
+    </div>
+
+</div>
 
 </div>
 
@@ -110,9 +90,14 @@
 <div id="starContainer"></div>
 
 <script>
+// 🔹 RESET MAIN TASKS ON BROWSER REOPEN
+if (!window.name.includes('starquest_active')) {
+    sessionStorage.clear();
+    window.name = 'starquest_active';
+}
+
 // ===== MAIN USER TASKS =====
 let todos = JSON.parse(sessionStorage.getItem('userTodos')) || [];
-
 const todoForm = document.getElementById('todoForm');
 const todoInput = document.getElementById('todoInput');
 const todoList = document.getElementById('todoList');
@@ -125,26 +110,19 @@ todoForm.addEventListener('submit', e => {
     const text = todoInput.value.trim();
     if (!text) return;
 
-    todos.unshift({id: Date.now().toString(), text, completed: false});
+    todos.unshift({ id: Date.now().toString(), text, completed: false });
     todoInput.value = '';
     saveAndRender();
 });
 
 function toggleTodo(id) {
-    todos = todos.map(t => t.id === id ? {...t, completed: !t.completed} : t);
+    todos = todos.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
     saveAndRender();
 }
 
 function deleteTodo(id) {
     todos = todos.filter(t => t.id !== id);
     saveAndRender();
-}
-
-function saveAndRender() {
-    sessionStorage.setItem('userTodos', JSON.stringify(todos));
-    const completedTaskIds = todos.filter(t => t.completed).map(t => t.id);
-    localStorage.setItem('completedTaskIds', JSON.stringify(completedTaskIds));
-    render();
 }
 
 function render() {
@@ -162,6 +140,7 @@ function render() {
 
     const active = todos.filter(t => !t.completed).length;
     const completed = todos.filter(t => t.completed).length;
+
     activeCount.textContent = `${active} active mission${active !== 1 ? 's' : ''}`;
     completedCount.textContent = completed ? `${completed} completed` : '';
     emptyState.style.display = todos.length ? 'none' : 'block';
@@ -173,15 +152,14 @@ function escapeHtml(text) {
     return div.innerHTML;
 }
 
-// ===== CATEGORY TASKS & STARS =====
+// ===== CATEGORY TASKS & STAR GLOW =====
 let categoryState = JSON.parse(sessionStorage.getItem('categoryState')) || {};
 const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
 
-// Floating stars
+// Floating stars background
 const starContainer = document.getElementById('starContainer');
 const NUM_STARS = 50;
 const floatingStars = [];
-
 for (let i = 0; i < NUM_STARS; i++) {
     const star = document.createElement('div');
     star.classList.add('star');
@@ -193,30 +171,40 @@ for (let i = 0; i < NUM_STARS; i++) {
     floatingStars.push(star);
 }
 
-// Update glow intensity and size based on completed category tasks
+// Update floating stars size/glow based on completed category tasks
 function updateFloatingStarGlow() {
-    const completedCount = Object.values(categoryState).filter(Boolean).length;
+   const completedCount = Object.values(categoryState).filter(Boolean).length;
+   // limit how strong the glow can get
+   const effect = Math.min(completedCount, 3); // clamp to 0..3
 
-    floatingStars.forEach(star => {
-        // Base size
-        let size = 2 + Math.random() * 2;
 
-        // Increase size with completed tasks
-        size += completedCount * 6; // bigger growth
+   floatingStars.forEach(star => {
+       const baseSize = 1 + Math.random() * 2;
+       const size = baseSize + effect * 3; // modest growth
+       star.style.width = star.style.height = size + 'px';
 
-        star.style.width = star.style.height = size + 'px';
 
-        // Glow intensity grows sharply
-        const intensity = 15 + completedCount * 25; 
-        star.style.boxShadow = `
-            0 0 ${intensity}px gold,
-            0 0 ${intensity * 2}px gold,
-            0 0 ${intensity * 3}px #fdd835
-        `;
-    });
+       // capped blur so glow never covers the page
+       const blur = Math.min(20 + effect * 20, 80);
+       star.style.boxShadow = `0 0 ${blur}px rgba(245,213,224,0.35)`;
+       star.style.opacity = 0.9;
+   });
 }
 
-// Initialize category checkboxes
+// ===== SAVE AND SYNC COMPLETED TASKS TO LOCALSTORAGE =====
+function saveAndRender() {
+    sessionStorage.setItem('userTodos', JSON.stringify(todos));
+
+    const completedMain = todos.filter(t => t.completed).map(t => t.id);
+    const completedCategory = Object.keys(categoryState).filter(starId => categoryState[starId]);
+    const allCompleted = [...completedMain, ...completedCategory];
+
+    localStorage.setItem('completedTaskIds', JSON.stringify(allCompleted));
+
+    render();
+}
+
+// CATEGORY CHECKBOX EVENTS
 categoryCheckboxes.forEach(cb => {
     const starId = cb.dataset.star;
     const starEl = document.getElementById(starId);
@@ -226,22 +214,21 @@ categoryCheckboxes.forEach(cb => {
         starEl.classList.add('glow');
     }
 
-    cb.addEventListener('change', e => {
-        if (cb.checked) {
-            starEl.classList.add('glow');
-            categoryState[starId] = true;
-        } else {
-            starEl.classList.remove('glow');
-            categoryState[starId] = false;
-        }
+    cb.addEventListener('change', () => {
+        categoryState[starId] = cb.checked;
+        starEl.classList.toggle('glow', cb.checked);
+
         sessionStorage.setItem('categoryState', JSON.stringify(categoryState));
+
+        saveAndRender();
         updateFloatingStarGlow();
     });
 });
 
-// Update floating stars at start
+// Initial floating stars update
 updateFloatingStarGlow();
 
+// expose functions globally
 window.toggleTodo = toggleTodo;
 window.deleteTodo = deleteTodo;
 

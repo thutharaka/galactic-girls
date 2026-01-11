@@ -62,9 +62,8 @@ body {
 <script>
 function updateStars() {
     let completedIds = [];
-    try {
-        completedIds = JSON.parse(localStorage.getItem('completedTaskIds')) || [];
-    } catch { completedIds = []; }
+    try { completedIds = JSON.parse(localStorage.getItem('completedTaskIds')) || []; } 
+    catch { completedIds = []; }
 
     const count = Math.min(completedIds.length, 6);
     document.getElementById('missionCount').textContent = count;
@@ -72,14 +71,15 @@ function updateStars() {
     for (let i = 1; i <= 6; i++) {
         const star = document.getElementById('star' + i);
         if (!star) continue;
-        if (i <= count) star.classList.add('active');
-        else star.classList.remove('active');
+        star.classList.toggle('active', i <= count);
     }
 }
 
 updateStars();
-window.addEventListener('storage', e => { if (e.key==='completedTaskIds') updateStars(); });
-setInterval(updateStars, 2000);
+window.addEventListener('storage', e => {
+    if (e.key === 'completedTaskIds') updateStars();
+});
+setInterval(updateStars, 1000);
 </script>
 
 </body>
