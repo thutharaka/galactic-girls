@@ -11,9 +11,6 @@ const activeCount = document.getElementById('activeCount');
 const completedCount = document.getElementById('completedCount');
 const starContainer = document.getElementById('starContainer');
 
-// === TASK PROGRESS STORAGE ===
-const TASK_PROGRESS_KEY = 'galacticTaskProgress';
-
 // === EVENT LISTENERS ===
 document.addEventListener('DOMContentLoaded', initializeApp);
 todoForm.addEventListener('submit', handleFormSubmit);
@@ -22,115 +19,27 @@ todoForm.addEventListener('submit', handleFormSubmit);
 function initializeApp() {
     createStars();
     setupCategoryListeners();
-    createProgressIndicator();
-    updateAllStarGlow();
-    render();
-    updateProgressIndicator();
-}
-
-// === PROGRESS INDICATOR ===
-function createProgressIndicator() {
-    // Check if progress indicator already exists
-    if (!document.querySelector('.progress-indicator')) {
-        const progressHTML = `
-            <div class="progress-indicator">
-                <div class="progress-title">Starmap Progress</div>
-                <div class="progress-bar-container">
-                    <div class="progress-bar"></div>
-                </div>
-                <div class="progress-text">0% Complete</div>
-            </div>
-        `;
-        
-        // Insert progress indicator after the container
-        const container = document.querySelector('.container');
-        if (container) {
-            container.insertAdjacentHTML('afterend', progressHTML);
-        }
-    }
-}
-
-function updateProgressIndicator() {
-    const progress = getTaskProgress();
-    const progressBar = document.querySelector('.progress-bar');
-    const progressText = document.querySelector('.progress-text');
-    
-    if (progressBar && progressText) {
-        progressBar.style.width = `${progress.completionPercentage}%`;
-        progressText.textContent = `${progress.completionPercentage}% Complete`;
-        
-        // Add glow effect based on progress
-        if (progress.completionPercentage > 0) {
-            progressBar.style.boxShadow = `0 0 ${progress.completionPercentage/2}px #f5d5e0`;
-            progressText.style.textShadow = `0 0 ${progress.completionPercentage/5}px #f5d5e0`;
-            progressText.style.color = '#f5d5e0';
-        }
-    }
+    updateAllStarGlow(); // Initial star glow check
+    render(); // Render user tasks
 }
 
 // === STAR CREATION ===
 function createStars() {
-    starContainer.innerHTML = '';
+    starContainer.innerHTML = ''; // Clear existing stars
     stars = [];
     
-    const numStars = 150; // More stars for better effect
+    const numStars = 100;
     for (let i = 0; i < numStars; i++) {
         const star = document.createElement('div');
         star.classList.add('star');
         star.style.top = Math.random() * 100 + '%';
         star.style.left = Math.random() * 100 + '%';
-        const size = Math.random() * 3 + 1; // Slightly larger stars
+        const size = Math.random() * 2 + 1;
         star.style.width = `${size}px`;
         star.style.height = `${size}px`;
-        
-        // Random animation delay for twinkling effect
-        star.style.animationDelay = `${Math.random() * 3}s`;
-        
         starContainer.appendChild(star);
         stars.push(star);
     }
-}
-
-// === TASK PROGRESS FUNCTIONS ===
-function saveTaskProgress() {
-    // Count completed user tasks
-    const userCompleted = todos.filter(t => t.completed).length;
-    
-    // Count completed category tasks
-    const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
-    const categoryCompleted = Array.from(categoryCheckboxes).filter(cb => cb.checked).length;
-    
-    // Total completed tasks
-    const totalCompleted = userCompleted + categoryCompleted;
-    
-    // Calculate completion percentage (max 12 tasks: 6 user + 6 category)
-    const totalPossibleTasks = 12;
-    const completionPercentage = Math.min(100, Math.round((totalCompleted / totalPossibleTasks) * 100));
-    
-    // Save to localStorage so starmap can access it
-    const progressData = {
-        totalCompleted,
-        userCompleted,
-        categoryCompleted,
-        completionPercentage,
-        lastUpdated: new Date().toISOString(),
-        totalTasks: totalPossibleTasks
-    };
-    
-    localStorage.setItem(TASK_PROGRESS_KEY, JSON.stringify(progressData));
-    
-    return progressData;
-}
-
-function getTaskProgress() {
-    const saved = localStorage.getItem(TASK_PROGRESS_KEY);
-    return saved ? JSON.parse(saved) : {
-        totalCompleted: 0,
-        userCompleted: 0,
-        categoryCompleted: 0,
-        completionPercentage: 0,
-        totalTasks: 12
-    };
 }
 
 // === TODO FUNCTIONS ===
@@ -148,7 +57,6 @@ function handleFormSubmit(e) {
     saveUserTodos();
     render();
     updateAllStarGlow();
-    updateProgressIndicator();
 }
 
 function toggleTodo(id) {
@@ -156,7 +64,6 @@ function toggleTodo(id) {
     saveUserTodos();
     render();
     updateAllStarGlow();
-    updateProgressIndicator();
 }
 
 function deleteTodo(id) {
@@ -164,7 +71,6 @@ function deleteTodo(id) {
     saveUserTodos();
     render();
     updateAllStarGlow();
-    updateProgressIndicator();
 }
 
 function render() {
@@ -184,6 +90,7 @@ function render() {
         </div>
     `).join('');
 
+    // Add event listeners to dynamically created elements
     addTodoEventListeners();
     updateStats();
     updateEmptyState();
@@ -236,6 +143,7 @@ function escapeHtml(text) {
 }
 
 function saveUserTodos() {
+    // Using sessionStorage - clears when browser tab is closed
     sessionStorage.setItem('userTodos', JSON.stringify(todos));
 }
 
@@ -243,24 +151,25 @@ function saveUserTodos() {
 function setupCategoryListeners() {
     const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
     categoryCheckboxes.forEach(cb => {
-        cb.addEventListener('change', () => {
-            updateAllStarGlow();
-            updateProgressIndicator();
-        });
+        cb.addEventListener('change', updateAllStarGlow);
     });
 }
 
 // === STAR GLOW LOGIC ===
 function updateAllStarGlow() {
-    const progress = saveTaskProgress();
-    const totalCompleted = progress.totalCompleted;
+    // Count completed user tasks
+    const userCompleted = todos.filter(t => t.completed).length;
+    
+    // Count completed category tasks
+    const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
+    const categoryCompleted = Array.from(categoryCheckboxes).filter(cb => cb.checked).length;
+    
+    // Total completed tasks
+    const totalCompleted = userCompleted + categoryCompleted;
     
     if (totalCompleted > 0) {
         stars.forEach(star => {
             star.classList.add('glow');
-            
-            // Calculate glow intensity based on completed tasks
-            const glowIntensity = 1 + (totalCompleted * 0.3);
             const glowSize = 5 + totalCompleted * 2;
             const glowSpread = 1 + totalCompleted;
             const outerGlow = 10 + totalCompleted * 3;
@@ -269,26 +178,29 @@ function updateAllStarGlow() {
             star.style.boxShadow = 
                 `0 0 ${glowSize}px ${glowSpread}px #f5d5e0, 
                  0 0 ${outerGlow}px ${outerSpread}px #c874b2`;
-            
-            // Add pulsing animation
-            star.style.animation = `pulse ${2 / glowIntensity}s infinite alternate, twinkle 3s infinite alternate`;
         });
     } else {
         stars.forEach(star => {
             star.classList.remove('glow');
             star.style.boxShadow = '';
-            star.style.animation = 'twinkle 3s infinite alternate';
         });
     }
 }
 
-// === SAVE PROGRESS ON PAGE UNLOAD ===
-window.addEventListener('beforeunload', function() {
-    saveTaskProgress();
-});
-
+// === PAGE VISIBILITY HANDLER ===
+// Clear tasks when page is closed (sessionStorage does this automatically)
+// This is just for additional cleanup if needed
 document.addEventListener('visibilitychange', function() {
     if (document.visibilityState === 'hidden') {
-        saveTaskProgress();
+        // Optional cleanup can go here
     }
 });
+
+// Optional: Clear sessionStorage on page refresh if desired
+// window.addEventListener('beforeunload', function() {
+//     sessionStorage.removeItem('userTodos');
+// });
+
+// Make functions available globally if needed for inline handlers (though we're using event listeners)
+window.toggleTodo = toggleTodo;
+window.deleteTodo = deleteTodo;

@@ -1,80 +1,375 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Star Quest Tasks</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Orbitron:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles1.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star Quest Tasks</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    min-height: 100vh;
+    background: radial-gradient(circle at top, #430D4B, #210535 70%),
+                url("https://www.transparenttextures.com/patterns/stardust.png");
+    color: #F5D5E0;
+    font-family: 'Inter', sans-serif;
+    padding: 2rem 1rem;
+}
+
+/* Container */
+.container { max-width: 52rem; margin: auto; }
+
+/* Cards */
+.card, .category-card {
+    background: #7B337D;
+    backdrop-filter: blur(14px);
+    border-radius: 1rem;
+    padding: 2.5rem;
+    box-shadow: 0 0 40px #c874b2, inset 0 0 20px #f5d5e0;
+    border: 1px solid #210535;
+    margin-bottom: 2rem;
+}
+
+/* Titles */
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    text-align: center;
+    font-size: 2.2rem;
+    margin-bottom: 1.75rem;
+    background: linear-gradient(90deg, #430d4b, #210535);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.15em;
+}
+
+.category-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #f5d5e0;
+}
+
+/* Input form */
+.input-form { display: flex; gap: 0.75rem; margin-bottom: 1.75rem; }
+#todoInput {
+    flex: 1;
+    padding: 0.85rem 1.1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #210535;
+    background: #210535;
+    color: #e5e7eb;
+    outline: none;
+    font-size: 1rem;
+}
+#todoInput::placeholder { color: #9ca3af; }
+#todoInput:focus { box-shadow: 0 0 15px #f5d5e0; }
+
+.add-btn {
+    background: linear-gradient(135deg, #210535, #7b337d);
+    border: none;
+    border-radius: 0.75rem;
+    color: white;
+    padding: 0.85rem 1.5rem;
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    letter-spacing: 0.05em;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+.add-btn:hover { transform: translateY(-2px); box-shadow: 0 0 20px #f5d5e0; }
+
+/* Stats */
+.stats { display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 0.85rem; color: #210535; }
+
+/* Empty state */
+.empty-state { text-align: center; padding: 3rem 0; color: #210535; opacity: 0.8; }
+
+/* To-do list */
+.todo-list, .category-list { display: flex; flex-direction: column; gap: 0.65rem; }
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.85rem;
+    background: #210535;
+    border-radius: 0.75rem;
+    border: 1px solid #430d4b;
+    transition: all 0.2s;
+}
+.todo-item:hover { box-shadow: 0 0 18px #f5d5e0; }
+
+.todo-checkbox { width: 1.2rem; height: 1.2rem; accent-color: #f5d5e0; }
+.todo-text { flex: 1; cursor: pointer; }
+.todo-text.completed { text-decoration: line-through; color: #9ca3af; }
+
+.delete-btn {
+    background: none;
+    border: none;
+    color: #fb7185;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s, transform 0.2s;
+}
+.todo-item:hover .delete-btn { opacity: 1; }
+
+/* Navigation */
+.nav-buttons {
+    position: fixed;
+    left: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+.nav-button {
+    font-family: 'Orbitron', sans-serif;
+    text-decoration: none;
+    color: #f5d5e0;
+    padding: 1rem 1.5rem;
+    width: 160px;
+    text-align: center;
+    border-radius: 0.75rem;
+    background: linear-gradient(135deg, #430d4b, #210535);
+    box-shadow: 0 0 20px rgba(200,116,178,0.4), inset 0 0 12px rgba(255,255,255,0.05);
+    letter-spacing: 0.08em;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.nav-button:hover { transform: translateX(6px); box-shadow: 0 0 30px rgba(245,213,224,0.8); }
+.nav-button.active { background: linear-gradient(135deg, #7b337d, #430d4b); }
+
+/* Stars */
+#starContainer {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+}
+.star {
+    position: absolute;
+    border-radius: 50%;
+    background: #f5d5e0;
+}
+.star.glow { transition: box-shadow 0.2s ease; }
+
+/* Category card specific */
+.category-card { background: #5A1E70; backdrop-filter: blur(12px); border: 1px solid #430d4b; padding: 1.5rem; margin-bottom: 2rem; }
+
+/* Mobile nav */
+@media (max-width: 900px) {
+    .nav-buttons { position: static; transform: none; margin-top: 2rem; align-items: center; }
+}
+</style>
 </head>
+
 <body>
-    <!-- Navigation -->
-    <nav class="nav-buttons">
-        <a href="index.html" class="nav-button">Home</a>
-        <a href="tasks.html" class="nav-button active">To-Do</a>
-        <a href="starmap.html" class="nav-button">Star Map</a>
-        <a href="teampage.html" class="nav-button">About Us</a>
-    </nav>
 
-    <div class="container">
-        <!-- User Tasks -->
-        <div class="card">
-            <h1>STAR QUEST</h1>
-            <form class="input-form" id="todoForm">
-                <input type="text" id="todoInput" placeholder="Enter mission objective..." autocomplete="off">
-                <button type="submit" class="add-btn">LAUNCH</button>
-            </form>
+<!-- Navigation -->
+<nav class="nav-buttons">
+    <a href="index.html" class="nav-button">Home</a>
+    <a href="tasks.html" class="nav-button active">To-Do</a>
+    <a href="starmap.html" class="nav-button">Star Map</a>
+    <a href="teampage.html" class="nav-button">About Us</a>
+</nav>
 
-            <div class="stats">
-                <span id="activeCount"></span>
-                <span id="completedCount"></span>
-            </div>
+<div class="container">
 
-            <div id="emptyState" class="empty-state">No missions assigned 🚀</div>
-            <div id="todoList" class="todo-list"></div>
+    <!-- User Tasks -->
+    <div class="card">
+        <h1>STAR QUEST</h1>
+        <form class="input-form" id="todoForm">
+            <input type="text" id="todoInput" placeholder="Enter mission objective..." autocomplete="off">
+            <button class="add-btn">LAUNCH</button>
+        </form>
+
+        <div class="stats">
+            <span id="activeCount"></span>
+            <span id="completedCount"></span>
         </div>
 
-        <!-- Category Tasks -->
-        <div class="category-card">
-            <div class="category-title">Colonizing Space</div>
-            <div id="colonizeList" class="category-list">
-                <div class="todo-item">
-                    <input type="checkbox" id="task1" class="category-checkbox">
-                    <label for="task1">Research & Development</label>
-                </div>
-                <div class="todo-item">
-                    <input type="checkbox" id="task2" class="category-checkbox">
-                    <label for="task2">Mission Planning & Logistics</label>
-                </div>
-                <div class="todo-item">
-                    <input type="checkbox" id="task3" class="category-checkbox">
-                    <label for="task3">Transportation Systems Development</label>
-                </div>
-            </div>
+        <div id="emptyState" class="empty-state">No missions assigned 🚀</div>
+        <div id="todoList" class="todo-list"></div>
+    </div>
 
-            <div class="category-title">Immersive Worlds</div>
-            <div id="worldsList" class="category-list">
-                <div class="todo-item">
-                    <input type="checkbox" id="task4" class="category-checkbox">
-                    <label for="task4">3D Modeling and Asset Creation</label>
-                </div>
-                <div class="todo-item">
-                    <input type="checkbox" id="task5" class="category-checkbox">
-                    <label for="task5">Audio and Sound Design</label>
-                </div>
-                <div class="todo-item">
-                    <input type="checkbox" id="task6" class="category-checkbox">
-                    <label for="task6">Programming Logic and Interactivity</label>
-                </div>
+    <!-- Category Tasks -->
+    <div class="category-card">
+        <div class="category-title">Colonizing Space</div>
+        <div id="colonizeList" class="category-list">
+            <div class="todo-item">
+                <input type="checkbox" id="task1">
+                <label for="task1">Research & Development</label>
+            </div>
+            <div class="todo-item">
+                <input type="checkbox" id="task2">
+                <label for="task2">Mission Planning & Logistics</label>
+            </div>
+            <div class="todo-item">
+                <input type="checkbox" id="task3">
+                <label for="task3">Transportation Systems Development</label>
+            </div>
+        </div>
+
+        <div class="category-title">Immersive Worlds</div>
+        <div id="worldsList" class="category-list">
+            <div class="todo-item">
+                <input type="checkbox" id="task4">
+                <label for="task4">3D Modeling and Asset Creation</label>
+            </div>
+            <div class="todo-item">
+                <input type="checkbox" id="task5">
+                <label for="task5">Audio and Sound Design</label>
+            </div>
+            <div class="todo-item">
+                <input type="checkbox" id="task6">
+                <label for="task6">Programming Logic and Interactivity</label>
             </div>
         </div>
     </div>
 
-    <!-- Stars container -->
-    <div id="starContainer"></div>
+</div>
 
-    <script src="script.js"></script>
+<!-- Stars container -->
+<div id="starContainer"></div>
+
+<script>
+// === USER TASKS WITH LOCAL STORAGE ===
+let todos = JSON.parse(localStorage.getItem('userTodos')) || [];
+
+const todoForm = document.getElementById('todoForm');
+const todoInput = document.getElementById('todoInput');
+const todoList = document.getElementById('todoList');
+const emptyState = document.getElementById('emptyState');
+const activeCount = document.getElementById('activeCount');
+const completedCount = document.getElementById('completedCount');
+
+todoForm.addEventListener('submit', handleFormSubmit);
+
+function handleFormSubmit(e) {
+    e.preventDefault();
+    const text = todoInput.value.trim();
+    if (!text) return;
+
+    todos.unshift({ id: Date.now().toString(), text, completed: false });
+    todoInput.value = '';
+    saveUserTodos();
+    render();
+}
+
+function toggleTodo(id) {
+    todos = todos.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
+    saveUserTodos();
+    render();
+}
+
+function deleteTodo(id) {
+    todos = todos.filter(t => t.id !== id);
+    saveUserTodos();
+    render();
+}
+
+function render() {
+    todoList.innerHTML = todos.map(todo => `
+        <div class="todo-item" data-id="${todo.id}">
+            <input type="checkbox" class="todo-checkbox" ${todo.completed ? 'checked' : ''}
+                onchange="toggleTodo('${todo.id}')">
+            <span class="todo-text ${todo.completed ? 'completed' : ''}" onclick="toggleTodo('${todo.id}')">
+                ${escapeHtml(todo.text)}
+            </span>
+            <button class="delete-btn" onclick="deleteTodo('${todo.id}')">✖</button>
+        </div>
+    `).join('');
+
+    updateStats();
+    updateEmptyState();
+}
+
+function updateStats() {
+    const active = todos.filter(t => !t.completed).length;
+    const completed = todos.filter(t => t.completed).length;
+    activeCount.textContent = `${active} active mission${active !== 1 ? 's' : ''}`;
+    completedCount.textContent = completed ? `${completed} completed` : '';
+}
+
+function updateEmptyState() {
+    emptyState.style.display = todos.length ? 'none' : 'block';
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+function saveUserTodos() {
+    localStorage.setItem('userTodos', JSON.stringify(todos));
+}
+
+// Expose functions for inline handlers
+window.toggleTodo = toggleTodo;
+window.deleteTodo = deleteTodo;
+
+// === STARS & CATEGORY TASKS ===
+document.addEventListener('DOMContentLoaded', () => {
+    const starContainer = document.getElementById('starContainer');
+    const numStars = 100;
+    const stars = [];
+
+    for (let i = 0; i < numStars; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        star.style.top = Math.random() * 100 + '%';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.width = star.style.height = Math.random() * 2 + 1 + 'px';
+        starContainer.appendChild(star);
+        stars.push(star);
+    }
+
+    const categoryCheckboxes = document.querySelectorAll('.category-card input[type="checkbox"]');
+
+    function updateStarGlow() {
+        const checkedCount = Array.from(categoryCheckboxes).filter(cb => cb.checked).length;
+        if (checkedCount > 0) {
+            stars.forEach(star => {
+                star.classList.add('glow');
+                star.style.boxShadow = `0 0 ${5 + checkedCount*3}px ${1 + checkedCount}px #f5d5e0, 0 0 ${10 + checkedCount*5}px ${2 + checkedCount}px #c874b2`;
+            });
+        } else {
+            stars.forEach(star => {
+                star.classList.remove('glow');
+                star.style.boxShadow = '';
+            });
+        }
+    }
+
+    categoryCheckboxes.forEach(cb => cb.addEventListener('change', updateStarGlow));
+    updateStarGlow();
+});
+
+// === PROGRESS STORAGE ===
+const PROGRESS_KEY = 'galacticProgress';
+
+function getProgress() {
+    return JSON.parse(sessionStorage.getItem(PROGRESS_KEY)) || { points: 0, stars: 0 };
+}
+
+function saveProgress(progress) {
+    sessionStorage.setItem(PROGRESS_KEY, JSON.stringify(progress));
+}
+
+function awardStar() {
+    const progress = getProgress();
+    progress.stars += 1;
+    progress.points += 10;
+    saveProgress(progress);
+}
+
+render();
+</script>
 </body>
 </html>
